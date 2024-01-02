@@ -1,0 +1,5 @@
+server:
+  port: 8080
+
+jdbc:
+  url: Settings from the application properties file

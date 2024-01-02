@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+#TODO: define the kind of object as Deployment
+kind: Deployment
+metadata: 
+  #TODO: give the deployment a name name: gowebapp
+  name: gowebapp
+  labels:
+    #TODO: give the Deployment a label: app: gowebapp
+    #TODO: give the Deployment a label: tier: frontend
+    app: gowebapp
+    tier: frontend
+spec:
+  #TODO: set replicas to 2
+  replicas: 2
+  selector:
+    matchLabels:
+      app: gowebapp
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: gowebapp
+        tier: frontend
+    spec:
+      containers:
+      - name: gowebapp
+        image: gowebapp:v2
+        env:
+        - #TODO: define name as DB_PASSWORD
+          #TODO: define value as mypassword
+          name: DB_PASSWORD
+        # value: mypassword
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: mysql
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 5
+          timeoutSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          periodSeconds: 5
+          timeoutSeconds: 1
+        volumeMounts:
+          #TODO: Set volume name to 'config-volume'
+        - name: config-volume
+          mountPath: /opt/gowebapp/config
+          #TODO: Set mountPath to '/opt/gowebapp/config'
+      volumes:
+       #TODO: define volume name: config-volume
+      - name: config-volume
+        configMap:
+          name: gowebapp
+          #TODO: Set ConfigMap name to 'gowebapp'
+          items:
+          - key: webapp-config-json
+            path: config.json

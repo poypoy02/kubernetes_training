@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  name: canary
+  labels:
+    app: gowebapp
+    tier: frontend
+    track: canary
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+  selector:
+    app: gowebapp
+    tier: frontend
+    #TODO: add a label: track: canary

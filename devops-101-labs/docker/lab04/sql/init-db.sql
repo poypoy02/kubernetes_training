@@ -1,0 +1,8 @@
+DROP DATABASE IF EXISTS ecommerce;
+DROP SCHEMA IF EXISTS ecommerce;
+DROP USER IF EXISTS ecommerce_admin;
+
+CREATE USER ecommerce_admin WITH ENCRYPTED PASSWORD 'javaadmin8585';
+CREATE DATABASE ecommerce WITH OWNER = postgres ENCODING = 'UTF8' CONNECTION LIMIT = -1;
+
+GRANT ALL PRIVILEGES ON DATABASE ecommerce TO ecommerce_admin;

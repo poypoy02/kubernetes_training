@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: primes-parallel-wq
+  labels:
+    app: primes
+spec:
+  parallelism: 3 # TODO: Set parallelism to 3
+  template:
+    metadata:
+      name: primes
+      labels:
+        app: primes
+    spec:
+      securityContext:
+        runAsUser: 1000
+      containers:
+      - name: primes
+        image: debian:stable-slim
+        command: ["bash"]
+        args: ["-c",  "current=0; max=110; echo 1; echo 2; for((i=3;i<=max;)); do for((j=i-1;j>=2;)); do if [  `expr $i % $j` -ne 0 ] ; then current=1; else current=0; break; fi; j=`expr $j - 1`; done; if [ $current -eq 1 ] ; then echo $i; fi; i=`expr $i + 1`; done"]
+      restartPolicy: Never

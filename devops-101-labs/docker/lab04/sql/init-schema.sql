@@ -1,0 +1,2 @@
+CREATE SCHEMA IF NOT EXISTS ecommerce;
+GRANT ALL PRIVILEGES ON SCHEMA ecommerce TO ecommerce_admin;

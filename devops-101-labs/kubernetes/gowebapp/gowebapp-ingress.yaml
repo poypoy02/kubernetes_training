@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress # 👈
+metadata:
+  name: gowebapp-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: gowebapp.localdev.me # 👈
+    http:
+      paths:
+      - pathType: Prefix # or ImplementationSpecific or Exact
+        path: "/"
+        backend:
+          service:
+            name: gowebapp
+            port:
+              number: 8080

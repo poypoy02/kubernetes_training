@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+#TODO: define the kind of object as Deployment
+kind: Deployment
+metadata: 
+  #TODO: give the deployment a name name: gowebapp-mysql
+  name: gowebapp-mysql
+  labels:
+    #TODO: give the Deployment a label: app: gowebapp-mysql
+    #TODO: give the Deployment a label: tier: backend
+    app: gowebapp-mysql
+    tier: backend
+spec:
+  #TODO: set replicas to 1
+  replicas: 1
+  strategy: 
+    #TODO: define the type of strategy as Recreate
+    type: Recreate
+  selector:
+    matchLabels:
+      app: gowebapp-mysql
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: gowebapp-mysql
+        tier: backend
+    spec:
+      containers:
+      - name: gowebapp-mysql
+        image: gowebapp-mysql:v1
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: mypassword
+        ports:
+        - #TODO: define the container port as 3306
+          containerPort: 3306

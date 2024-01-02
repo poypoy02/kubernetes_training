@@ -1,0 +1,31 @@
+apiVersion: v1
+  #TODO: define the kind of object as Service
+kind: Service
+metadata: 
+  #TODO: give the Service a name: gowebapp
+  name: gowebapp
+  labels:
+    #TODO: give the Service a label: app: gowebapp
+    #TODO: give the Service a label: tier: frontend
+    app: gowebapp
+    tier: frontend
+spec:
+  #TODO: Set service type to NodePort
+  # type: NodePort
+  # TODO: Set service type to ClusterIP - Lab06
+  type: ClusterIP
+  ports:
+  - #TODO: expose port 8080
+    # By default and for convenience, the `targetPort`
+    # is set to the same value as the `port` field.
+    #targetPort: 8080
+    # `nodePort` is an optional field
+    # By default and for convenience, the Kubernetes
+    # control plane will allocate a port from a range (default: 30000-32767)
+    port: 8080
+    targetPort: 8080
+  selector:
+    #TODO: define a selector: app: gowebapp
+    #TODO: define a selector: tier: frontend
+    app: gowebapp
+    tier: frontend

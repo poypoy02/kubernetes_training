@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv01
+  labels:
+    app: gowebapp-mysql
+spec:
+  storageClassName: hostpath
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  hostPath:
+    #docker run -it --rm --privileged --pid=host justincormack/nsenter1
+    path: /var/lib/k8s-pvs/pv01 # on "docker-desktop" node

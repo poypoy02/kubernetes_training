@@ -1,0 +1,27 @@
+# docker run --rm 
+#    -v $(pwd):/app
+#    -w /app
+#    -v $HOME/.m2:/root/.m2
+#    maven:3.8-eclipse-temurin-17
+#    mvn package
+
+# docker run --rm ^
+#    -v %cd%:/app ^
+#    -w /app ^
+#    -v %USERPROFILE%\.m2:/root/.m2 ^
+#    maven:3.8-eclipse-temurin-17 ^
+#    mvn package
+
+FROM maven:3.8-eclipse-temurin-17 AS prepare-production
+WORKDIR /workdir/server/target/dependency
+COPY target/*.jar ../
+RUN jar -xf ../*.jar
+
+FROM eclipse-temurin:17-jre
+EXPOSE 8080
+VOLUME /tmp
+ARG DEPENDENCY=/workdir/server/target/dependency
+COPY --from=prepare-production ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY --from=prepare-production ${DEPENDENCY}/META-INF /app/META-INF
+COPY --from=prepare-production ${DEPENDENCY}/BOOT-INF/classes /app
+ENTRYPOINT ["java","-cp","app:app/lib/*","com.company.project.Application"]

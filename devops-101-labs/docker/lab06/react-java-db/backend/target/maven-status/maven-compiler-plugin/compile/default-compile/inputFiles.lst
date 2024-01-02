@@ -1,0 +1,4 @@
+/opt/app/src/main/java/com/company/project/controllers/HomeController.java
+/opt/app/src/main/java/com/company/project/entity/Greeting.java
+/opt/app/src/main/java/com/company/project/Application.java
+/opt/app/src/main/java/com/company/project/repository/GreetingRepository.java

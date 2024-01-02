@@ -1,0 +1,16 @@
+# docker run --rm ^
+#    -v %cd%:/code ^
+#    -w /code ^
+#    node:lts ^
+#    npm ci
+
+# docker run --rm ^
+#    -v %cd%:/code ^
+#    -w /code ^
+#    node:lts ^
+#    npm run build
+
+FROM nginx:1.13-alpine
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY /build /usr/share/nginx/html

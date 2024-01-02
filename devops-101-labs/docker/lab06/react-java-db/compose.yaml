@@ -1,0 +1,51 @@
+services:
+  db:
+    image: postgres:14
+    # ports:
+    #  - "5432:5432"
+    environment:
+      - POSTGRES_DB=example
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+    volumes:
+      # - db-data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql
+    networks:
+      - spring-postgresql
+  backend:
+    build: backend
+    # ports:
+    #   - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://db/example"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health | grep UP || exit 1"
+      interval: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - spring-postgresql # 👈 (2)
+      - react-spring # 👈
+    depends_on:
+      db:
+        condition: service_healthy
+  frontend: # 👈
+    build: frontend
+    ports:
+      - "3000:80"
+    networks:
+      - react-spring
+    depends_on:
+      - backend 
+volumes:
+  db-data: {}
+networks:
+  spring-postgresql: {} # 👈 (2)
+  react-spring: {}

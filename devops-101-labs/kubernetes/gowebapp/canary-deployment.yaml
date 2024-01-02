@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: canary
+  labels:
+    app: gowebapp
+    tier: frontend
+    track: canary
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: gowebapp
+      tier: frontend
+      track: canary
+  template:
+    metadata:
+      labels:
+        app: gowebapp
+        tier: frontend
+        track: canary
+    spec:
+      containers:
+      - name: gowebapp
+        image: gowebapp:v1.1
+        env:
+        - name: DB_PASSWORD
+          value: mypassword
+        ports:
+        - containerPort: 8080

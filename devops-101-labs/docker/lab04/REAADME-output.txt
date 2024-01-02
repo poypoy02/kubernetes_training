@@ -1,0 +1,342 @@
+## Trying out Bind Mounts
+
+1-2)
+
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker run --rm -it -v $pwd\src:/src alpine sh
+/ # ls -l
+total 56
+drwxr-xr-x    2 root     root          4096 Dec  7 09:43 bin
+drwxr-xr-x    5 root     root           360 Dec 18 06:59 dev
+drwxr-xr-x    1 root     root          4096 Dec 18 06:59 etc
+drwxr-xr-x    2 root     root          4096 Dec  7 09:43 home
+drwxr-xr-x    7 root     root          4096 Dec  7 09:43 lib
+drwxr-xr-x    5 root     root          4096 Dec  7 09:43 media
+drwxr-xr-x    2 root     root          4096 Dec  7 09:43 mnt
+drwxr-xr-x    2 root     root          4096 Dec  7 09:43 opt
+dr-xr-xr-x  371 root     root             0 Dec 18 06:59 proc
+drwx------    1 root     root          4096 Dec 18 07:00 root
+drwxr-xr-x    2 root     root          4096 Dec  7 09:43 run
+drwxr-xr-x    2 root     root          4096 Dec  7 09:43 sbin
+drwxrwxrwx    1 root     root          4096 Dec 18 06:58 src
+drwxr-xr-x    2 root     root          4096 Dec  7 09:43 srv
+dr-xr-xr-x   11 root     root             0 Dec 18 06:59 sys
+drwxrwxrwt    2 root     root          4096 Dec  7 09:43 tmp
+drwxr-xr-x    7 root     root          4096 Dec  7 09:43 usr
+drwxr-xr-x   12 root     root          4096 Dec  7 09:43 var
+/ # cd /src/hello
+/src/hello # ls -l
+total 0
+-rwxrwxrwx    1 root     root           329 Dec 18 00:59 Main.java
+/src/hello # cat Main.java
+package hello;
+
+public class Main {
+        public static void main(String[] args) {
+                System.out.println("Hello Docker from Java!");
+
+                /*
+                String name = System.getenv("HELLO_NAME");
+                if (name == null || name.trim().isEmpty()) {
+                        name = "Docker";
+                }
+                System.out.println("Hello " + name + " from Java!");
+                */
+        }
+}
+/src/hello #
+
+3)
+
+/src/hello # cat Main.java
+package hello;
+
+public class Main {
+        public static void main(String[] args) {
+                System.out.println("Hello Docker from Java!");
+
+                /*
+                String name = System.getenv("HELLO_NAME");
+                if (name == null || name.trim().isEmpty()) {
+                        name = "Docker";
+                }
+                System.out.println("Hello " + name + " from Java!");
+                */
+        }
+}
+/src/hello # cat Main.java
+package hello;
+    // Epoy was here!
+
+public class Main {
+        public static void main(String[] args) {
+                System.out.println("Hello Docker from Java!");
+
+                /*
+                String name = System.getenv("HELLO_NAME");
+                if (name == null || name.trim().isEmpty()) {
+                        name = "Docker";
+                }
+                System.out.println("Hello " + name + " from Java!");
+                */
+        }
+}
+/src/hello #
+
+4-5)
+
+
+/src/hello # echo "// I Love You Danielle" >> Main.java
+/src/hello # cat Main.java
+package hello;
+    // Epoy was here!
+
+public class Main {
+        public static void main(String[] args) {
+                System.out.println("Hello Docker from Java!");
+
+                /*
+                String name = System.getenv("HELLO_NAME");
+                if (name == null || name.trim().isEmpty()) {
+                        name = "Docker";
+                }
+                System.out.println("Hello " + name + " from Java!");
+                */
+        }
+}
+// I Love You Danielle
+/src/hello #
+
+## Trying out Volumes (or Volume Mounts)
+
+1)
+
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker run -d -e POSTGRES_PASSWORD=password --name coffee-db -it postgres
+97009f4a2cf6512aaef2d22320fe8c49fe7452985746d6d784475da7bc188ab6
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker exec -it coffee-db psql -U postgres -W
+
+2)
+
+
+psql (16.1 (Debian 16.1-1.pgdg120+1))
+Type "help" for help.
+
+postgres=# CREATE DATABASE coffee_shop;
+CREATE DATABASE
+postgres=# \l
+                                                       List of databases
+    Name     |  Owner   | Encoding | Locale Provider |  Collate   |   Ctype    | ICU Locale | ICU Rules |   Access privileges
+-------------+----------+----------+-----------------+------------+------------+------------+-----------+-----------------------
+ coffee_shop | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ postgres    | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ template0   | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+             |          |          |                 |            |            |            |           | postgres=CTc/postgres
+ template1   | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+             |          |          |                 |            |            |            |           | postgres=CTc/postgres
+(4 rows)
+
+postgres=#
+
+3-5)
+
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker start coffee-db
+coffee-db
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker ps
+CONTAINER ID   IMAGE      COMMAND                  CREATED              STATUS         PORTS      NAMES
+57de44ac5f3b   postgres   "docker-entrypoint.s…"   About a minute ago   Up 2 seconds   5432/tcp   coffee-db
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker exec -it coffee-db psql -U postgres -W
+Password: 
+psql (16.1 (Debian 16.1-1.pgdg120+1))
+Type "help" for help.
+
+postgres=# \l
+                                                       List of databases
+    Name     |  Owner   | Encoding | Locale Provider |  Collate   |   Ctype    | ICU Locale | ICU Rules |   Access privileges
+-------------+----------+----------+-----------------+------------+------------+------------+-----------+-----------------------
+ coffee_shop | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ postgres    | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ template0   | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+             |          |          |                 |            |            |            |           | postgres=CTc/postgres
+ template1   | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+             |          |          |                 |            |            |            |           | postgres=CTc/postgres
+(4 rows)
+
+postgres=#
+
+6-7)
+
+
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker stop coffee-db
+coffee-db
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker container rm coffee-db
+coffee-db
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> 
+
+8)
+
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker volume ls
+DRIVER    VOLUME NAME
+local     5bf4dd533ca9bf3219db459b3ef961a73d153dcb3642546d78792dd8fcf795fd
+local     081044ccd56f3be03320fbaa19c7a88968af60195fb1b03518732e95b6de7bc9
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker volume rm 5bf4dd533ca9bf3219db459b3ef961a73d153dcb3642546d78792dd8fcf795fd
+5bf4dd533ca9bf3219db459b3ef961a73d153dcb3642546d78792dd8fcf795fd
+
+9)
+
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker run -d --name coffee-db -e POSTGRES_PASSWORD=secret -v coffee-db-data:/var/lib/postgresql/data postgres
+a872419fb5dfbb885436721d5633baf288bb98b5802fe0558bb7924cd0e334ee
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker ps
+CONTAINER ID   IMAGE      COMMAND                  CREATED         STATUS         PORTS      NAMES
+a872419fb5df   postgres   "docker-entrypoint.s…"   4 seconds ago   Up 3 seconds   5432/tcp   coffee-db
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> 
+
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker exec -it coffee-db psql -U postgres -W
+Password: 
+psql (16.1 (Debian 16.1-1.pgdg120+1))
+Type "help" for help.
+
+postgres=# CREATE DATABASE coffee_shop;
+CREATE DATABASE
+postgres=# \l
+                                                       List of databases
+    Name     |  Owner   | Encoding | Locale Provider |  Collate   |   Ctype    | ICU Locale | ICU Rules |   Access privileges
+-------------+----------+----------+-----------------+------------+------------+------------+-----------+-----------------------
+ coffee_shop | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ postgres    | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ template0   | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+             |          |          |                 |            |            |            |           | postgres=CTc/postgres
+ template1   | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+             |          |          |                 |            |            |            |           | postgres=CTc/postgres
+(4 rows)
+
+postgres=#
+
+
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker ps
+CONTAINER ID   IMAGE      COMMAND                  CREATED              STATUS              PORTS      NAMES
+a872419fb5df   postgres   "docker-entrypoint.s…"   About a minute ago   Up About a minute   5432/tcp   coffee-db
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker stop coffee-db
+coffee-db
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker start coffee-db
+coffee-db
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker exec -it coffee-db psql -U postgres -W
+Password: 
+psql (16.1 (Debian 16.1-1.pgdg120+1))
+Type "help" for help.
+
+postgres=# \l
+                                                       List of databases
+    Name     |  Owner   | Encoding | Locale Provider |  Collate   |   Ctype    | ICU Locale | ICU Rules |   Access privileges
+-------------+----------+----------+-----------------+------------+------------+------------+-----------+-----------------------
+ coffee_shop | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ postgres    | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ template0   | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+             |          |          |                 |            |            |            |           | postgres=CTc/postgres
+ template1   | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+             |          |          |                 |            |            |            |           | postgres=CTc/postgres
+(4 rows)
+
+postgres=#
+
+10)
+
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker stop coffee-db
+coffee-db
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker container rm coffee-db
+coffee-db
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> 
+
+11)
+
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker run -d --name coffee-db -e POSTGRES_PASSWORD=secret -v coffee-db-data:/var/lib/postgresql/data postgres
+cb0f18e7197f66eedf4cb8b9ff6a933a9712002d8b044233bf2f005d40ad7c4f
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker exec -it coffee-db psql -U postgres -W
+Password: 
+psql (16.1 (Debian 16.1-1.pgdg120+1))
+Type "help" for help.
+
+postgres=# \l
+                                                       List of databases
+    Name     |  Owner   | Encoding | Locale Provider |  Collate   |   Ctype    | ICU Locale | ICU Rules |   Access privileges
+-------------+----------+----------+-----------------+------------+------------+------------+-----------+-----------------------
+ coffee_shop | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ postgres    | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ template0   | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+             |          |          |                 |            |            |            |           | postgres=CTc/postgres
+ template1   | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+             |          |          |                 |            |            |            |           | postgres=CTc/postgres
+(4 rows)
+
+postgres=#
+
+12)
+
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker ps  
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker rm coffee-db
+coffee-db
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker volume ls
+DRIVER    VOLUME NAME
+local     081044ccd56f3be03320fbaa19c7a88968af60195fb1b03518732e95b6de7bc9
+local     coffee-db-data
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> docker volume rm coffee-db-data
+coffee-db-data
+PS C:\DevOpsTraining\devops-101-labs\docker\lab03\j-hello> 
+
+## Database Initialization with Scripts
+
+1)
+
+PS C:\DevOpsTraining\devops-101-labs\docker\lab04> docker run -d --name test-pg -e POSTGRES_PASSWORD=secret -v $pwd/sql:/docker-entrypoint-initdb.d postgres
+af053926fbfc2b4cb3c31a4dd00bc3046fa8b6ffe918523766d41fd5af413b7f
+PS C:\DevOpsTraining\devops-101-labs\docker\lab04> 
+
+2)
+
+PS C:\DevOpsTraining\devops-101-labs\docker\lab04> docker exec -it test-pg psql -U postgres -W
+Password:
+psql (16.1 (Debian 16.1-1.pgdg120+1))
+Type "help" for help.
+
+postgres=# \dt
+              List of relations
+ Schema |      Name       | Type  |  Owner
+--------+-----------------+-------+----------
+ public | order           | table | postgres
+ public | product_catalog | table | postgres
+ public | user            | table | postgres
+(3 rows)
+
+3)
+
+PS C:\DevOpsTraining\devops-101-labs\docker\lab04> docker stop test-pg
+test-pg
+PS C:\DevOpsTraining\devops-101-labs\docker\lab04> docker container rm test-pg
+test-pg
+PS C:\DevOpsTraining\devops-101-labs\docker\lab04> docker ps -a
+
+## Serve Web Pages
+
+1)
+
+PS C:\DevOpsTraining\devops-101-labs\docker\lab04\linux_tweet_app> docker run --rm --name web-81 -d -p 8081:80 -v $pwd\html:/usr/share/nginx/html nginx
+Unable to find image 'nginx:latest' locally
+latest: Pulling from library/nginx
+1f7ce2fa46ab: Already exists
+9b16c94bb686: Already exists
+9a59d19f9c5b: Already exists 
+9ea27b074f71: Already exists
+c6edf33e2524: Already exists
+84b1ff10387b: Already exists
+517357831967: Already exists
+Digest: sha256:10d1f5b58f74683ad34eb29287e07dab1e90f10af243f151bb50aa5dbb4d62ee
+Status: Downloaded newer image for nginx:latest
+9b91ac9ccea561e5ba2cde96fd8b34216dd02c2cee0f411373afa5b57024e6a1
+PS C:\DevOpsTraining\devops-101-labs\docker\lab04\linux_tweet_app> 

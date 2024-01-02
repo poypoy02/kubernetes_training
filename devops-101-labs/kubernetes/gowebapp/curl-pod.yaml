@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: curlpod
+  labels:
+    run: curlpod
+spec:
+  securityContext:
+    runAsUser: 1000
+  containers:
+  - name: curlpod
+    image: curlimages/curl
+    command:
+    - 'sleep'
+    - '30000'
+    resources: {}

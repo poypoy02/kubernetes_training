@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+	<root level="WARN" />
+	<logger name="com.company.project" level="DEBUG" />
+	<logger name="org.springframework" level="WARN" />
+	<logger name="docker" level="INFO"/>
+	<logger name="org.testcontainers" level="INFO"/>
+	<!-- Un/Comment to troubleshoot the pulling of Docker images
+	<logger name="org.testcontainers.images" level="DEBUG"/>
+	<logger name="org.testcontainers.utility" level="DEBUG"/>
+	-->
+	<logger name="com.github.dockerjava" level="WARN"/>
+	<!-- Un/Comment to see SQL commands of JPA/Hibernate
+	<logger name="org.hibernate.SQL" level="DEBUG" />
+	<logger name="logging.level.org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" />
+	-->
+</configuration>

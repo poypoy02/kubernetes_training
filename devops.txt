@@ -1,0 +1,29 @@
+• Responsible for automating build and software configuration management related tasks.
+• Create and maintain CI/CD pipelines to define an automated and repeatable way to build, test, and deploy applications across several Willis Towers Watson software products using Microsoft Azure DevOps.
+• Collaborate with developers and architects to evaluate proposed application migration architecture and orchestrate provisioning of Azure resources using IaC.
+• Create reusable Terraform templates and customize their required configurations according to application use case specifications.
+• Write, apply, and maintain Desired State Configuration (DSC) to ensure consistency and standardization in application servers.
+• Facilitate cloud adoption to accelerate the migration of application, data, and related infrastructure to Azure. Demonstrate PoCs in the process.
+• Provide design, implementation guidance and tutoring as necessary to other team members in best practices, tool use, and configuration management principals
+• Designing, training and implementing source code control management best practices
+• Develop and maintain our internal release management process
+• Automate DR environment provisioning, application build and deployment of PaaS based applications to promote system reliability.
+• Communicate effectively with members of software development and other project related groups to ensure processes and project objectives are met
+• Set up Azure Monitor for application, database, and other components to ensure proactive monitoring and application up-time.
+
+
+
+• Responsible for automating build and software configuration management related tasks. Responsible also for building out our continuous integration platform across several Willis Towers Watson software products using Microsoft Azure DevOps.
+• Work closely with both Software Development and IT Operations groups to ensure that the final releases are up to organizational standards and are released successfully without negative impact to our Customers.
+• Design, develop, maintain and support high-quality in-house software build systems for Enterprise class software using Microsoft Azure DevOps.
+• Automate scripts to deploy software in an automated process.
+• Provide design, implementation guidance and tutoring as necessary to other team members in best practices, tool use, and configuration management principals
+• Management and creation of configuration for internal customers responsible for scheduling and or deployment to Quality Assurance and development Integration environments
+• Management and creation of configuration items for non-production environments to support Solution Deliver Life Cycle development for internal customers; responsible for scheduling and deploying to Quality Assurance and development Integration environments
+• Designing, training and implementing source code control management best practices
+• Develop and maintain our internal release management process
+• Creation and maintenance of an automated build/release scripts and plans
+• Communicate effectively with members of software development and other project related groups to ensure processes and project objectives are met
+• Provide guidance and tutoring as necessary to other team members in best practices, tool use, and software configuration management principals
+• Responsible for scheduling and deploying to Dev, QA, UAT and Production environments]
+test
